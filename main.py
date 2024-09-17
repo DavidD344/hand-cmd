@@ -19,14 +19,15 @@ while cap.isOpened():
     if not success:
         continue
     
-    # Convertendo BGR para RGB
+    # Pega a imagem da camera
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    # Trata na foto para ficar facil da biblioteca funciona
     results = hands.process(image)
-    
-    # Convertendo de volta para BGR
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    
+    # Verifica se achou alguma mao
     if results.multi_hand_landmarks:
+        # Roda em todas as mãos
         for hand_landmarks in results.multi_hand_landmarks:
             # Desenhar as landmarks da mão
             mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
@@ -41,7 +42,7 @@ while cap.isOpened():
             # Definir um limite para determinar o toque
             if distance < 0.02:  # Ajuste este valor para melhorar a sensibilidade
                 print("toquei")
-                os.system("xdotool click 1")  # Simula clique do mouse no Linux
+                os.system("")  # Simula clique do mouse no Linux
             
     cv2.imshow('MediaPipe Hands', image)
     if cv2.waitKey(5) & 0xFF == 27:
@@ -49,3 +50,5 @@ while cap.isOpened():
 
 cap.release()
 cv2.destroyAllWindows()
+
+# Adicionar area de usuario para detecção
